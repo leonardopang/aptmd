@@ -1,0 +1,33 @@
+# APTMD
+
+APTMD Plugin - Anotações
+
+- Tratar todos os dados vindos por querystring ($_GET), pois estão sendo usados para montar query de banco diretamente, e isso abre brecha para SQL injection
+
+- Tratar os dados vindos por POST ($_POST), pois isso evita problemas de formato, codificação e segurança. Para tratar é preciso buscar funções do wordpress ou do PHP prontas para isso, serem usadas em dados sendo recebidos e ajudando na prevenção
+
+- Faltam tratamentos para dados que são recebido ($_POST, $_GET, $_FILES) em branco ou errados, a maioria esta vindo diretamente para serem usados, e isso gera risco de serem salvos dados ruins, ou errados, e como não existe tratativa, o usuário não podem nem corrigir antes de enviar, pois não existe retorno de erro ou qualquer aviso.
+
+- Existe bastante utilização de IDs/Values fixos no código, isso significa que, não seria possível deixar os dados dinamicos, já que os IDs estão previamente fixados, e também caso haja mudança desses IDs no banco, em caso de migração do plugin ou recadastro de algum desses dados, o mesmo deixaria de funcionar, já que seu ID iria mudar. Então atenção se isso vai ou não prejudicar o funcionamento do plugin em médio prazo.
+	- ex de arquivos com isso: aptmd.php, validar_socio.php...
+
+- Verificar se o WP permite escrever queries do banco usando funções de "prepare" e/ou building, para aproveitar as boas práticas de segurança que essas funções trazem junto.
+
+- Multiplos formadores de cada certificad: Revisar o dados do banco, pois a forma como esta sendo salvo isso pode estar 1:1 entre certificado e formador, e isso impede os multiplos formadores assinarem um único certificado
+
+- O sistema parece permitir 2 formadores, então para resolver a questão de exibir ambos, só precisaria buscar a coluna correta no banco.
+
+- Necessário revisar todos os textos que vão aparecer para o usuário, pois ainda existem alguns erros ortográficos
+
+- Verificar um disparo de email repetido em "certificados.php", se esta regra esta correta mesmo.
+
+- emitir_relatorio.php: 
+	- verificar se variavel "$origem" esta correta
+
+- listar_certificados_adm.php:
+	- fiz uma modificação, para adicionar a coluna de Formador 2, é preciso testar se esta funcionando
+
+- listar_canalizacao_adm.php:
+	- fiz uma modificação, para adicionar a coluna de Formador 2, é preciso testar se esta funcionando
+
+- socio_card: Verificar se o número do sócio sempre vai começar com "00", pois esta fixo, e quando o número aumentar vai continuar com "00" antes.
